@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Оформлення замовлення{% endblock %}
+{% block content %}
+    {% include '_navigation.html' %}
+    <main class="checkout-main">
+        {% if basket %}
+            <h1>Ваше замовлення</h1>
+            <p class="checkout-lead">Перевірте позиції перед підтвердженням.</p>
+            <div class="checkout-card">
+                <ul class="basket-list">
+                    {% for position in basket.values() %}
+                        <li>
+                            <span class="item-name">{{ position['name'] }}</span>
+                            <span class="item-qty">к-сть: {{ position['count'] }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="checkout-actions">
+                    <form method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <button type="submit" class="btn-checkout">Оформити замовлення</button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <div class="checkout-card empty-basket">
+                <h1>Ваш кошик порожній</h1>
+                <p>Додайте страви з меню, щоб оформити замовлення.</p>
+                <a href="/menu">Перейти до меню</a>
+            </div>
+        {% endif %}
+    </main>
+{% endblock %}

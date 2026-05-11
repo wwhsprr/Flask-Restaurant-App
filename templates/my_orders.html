@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Мої замовлення{% endblock %}
+{% block content %}
+    {% include '_navigation.html' %}
+    <h2>Ваші замовлення</h2>
+    {% for order in us_orders %}
+        <p>Замовлення №{{ order.id }} від {{ order.order_time.strftime('%Y-%m-%d %H:%M') }}</p>
+        <button><a href="/my_order/{{ order.id }}">Переглянути деталі</a></button>
+    {% endfor %}
+{% endblock %}

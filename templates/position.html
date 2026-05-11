@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ position.name }}{% endblock %}
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="flash-messages">
+      <div class="alert">{{ messages[-1] }}</div>
+    </div>
+  {% endif %}
+{% endwith %}
+
+{% include '_navigation.html' %}
+
+    <img src="{{ url_for('static', filename='menu/' + position.file_name) }}" width="500" alt="">
+    <p>{{ position.name }}  ({{ position.weight }}гр)</p>
+    <small>{{ position.ingredients }}</small>
+    <p>Опис:</p>
+    <pre>{{ position.description }}</pre>
+    <p>{{ position.price }} грн</p>
+    <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <input type="hidden" name="id" value="{{ position.id }}">
+        <label for="num">Кількість: </label>
+        <input type="number" name="num" id="num">
+        <input type="submit" value="Додати">
+    </form>
+{% endblock %}

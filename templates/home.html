@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Головна{% endblock %}
+{% block content %}
+    <main class="home-hero">
+        {% if current_user.is_authenticated %}
+            <h1>Вітаємо у нашому ресторані, {{ current_user.nickname }}!</h1>
+            <div class="home-links">
+                {% if current_user.nickname == "admin" %}
+                    <a href="/add_position">Додати позицію</a>
+                    <a href="/menu">Меню</a>
+                {% endif %}
+                <a href="/logout">Вийти</a>
+            </div>
+        {% else %}
+            <h1>Вітаємо у нашому ресторані!</h1>
+            <div class="home-links">
+                <a href="/login">Вхід</a>
+                <a href="/register">Реєстрація</a>
+            </div>
+        {% endif %}
+    </main>
+{% endblock %}
