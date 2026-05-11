@@ -22,8 +22,10 @@ import os
 
 dotenv.load_dotenv()
 
-DB_URL = os.environ.get("DB_URL")
-engine = create_engine(DB_URL, echo=True)
+DATABASE_URL = os.environ.get("DATABASE_URL")
+if DATABASE_URL is None:
+    raise RuntimeError("DATABASE_URL is not set. Add it to your environment or .env file.")
+engine = create_engine(DATABASE_URL, echo=True)
 Session = sessionmaker(bind=engine)
 
 
