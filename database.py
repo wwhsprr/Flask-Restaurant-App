@@ -103,5 +103,4 @@ class Orders(Base):
 
 
 if __name__ == "__main__":
-    base = Base()
-    base.create_db()
+    Base.metadata.create_all(engine)
