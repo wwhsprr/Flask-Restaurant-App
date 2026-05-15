@@ -200,16 +200,21 @@ def menu():
 def position(name):
     with Session() as cursor:
         us_position = cursor.query(Menu).filter_by(active=True, name=name).first()
+
+    if not us_position:
+        flash("Позицію не знайдено", "danger")
+        return redirect(url_for("menu"))
+
+    if "csrf_token" not in session:
+        session["csrf_token"] = secrets.token_hex(32)
+
     if request.method == "POST":
         if request.form.get("csrf_token") != session["csrf_token"]:
             return "Запит заблоковано!", 403
 
         position_id = request.form.get("id")
         position_num = request.form.get("num")
-        if "basket" not in session:
-            basket = {}
-        else:
-            basket = session.get("basket")
+        basket = session.get("basket", {})
         basket[position_id] = {"name": us_position.name, "count": position_num}
         session["basket"] = basket
         flash("Позицію додано у кошик!")
