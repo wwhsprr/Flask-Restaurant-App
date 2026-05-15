@@ -360,9 +360,9 @@ def reservations_check():
         )
 
 
-@app.route("/menu_check", methods=["GET", "POST"])
+@app.route("/check_menu", methods=["GET", "POST"])
 @login_required
-def menu_check():
+def check_menu():
     if current_user.nickname != "admin":
         return redirect(url_for("home"))
 
