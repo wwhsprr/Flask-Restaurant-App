@@ -8,7 +8,7 @@
             <img src="{{ url_for('static', filename='menu/' + position.file_name) }}" alt="{{ position.name }}" width="200">
             <h3>{{ position.name }}</h3>
             <p>{{ position.ingredients }}</p>
-            <button><a href="{{ url_for('position', name=position.name) }}">Оглянути детальніше</a></button>
+            <button><a href="{{ url_for('position', position_id=position.id) }}">Оглянути детальніше</a></button>
         </div>
         <hr>
     {% endfor %}
