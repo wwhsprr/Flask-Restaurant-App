@@ -1,5 +1,4 @@
 import os
-import uuid
 from datetime import datetime
 import secrets
 from flask_login import (
@@ -23,6 +22,27 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 
 FILES_PATH = "static/menu"
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
+
+
+def list_menu_images():
+    if not os.path.isdir(FILES_PATH):
+        return []
+    return sorted(
+        name
+        for name in os.listdir(FILES_PATH)
+        if os.path.isfile(os.path.join(FILES_PATH, name))
+        and os.path.splitext(name)[1].lower() in IMAGE_EXTENSIONS
+    )
+
+
+def is_valid_menu_image(filename):
+    if not filename or os.path.basename(filename) != filename:
+        return False
+    path = os.path.join(FILES_PATH, filename)
+    ext = os.path.splitext(filename)[1].lower()
+    return ext in IMAGE_EXTENSIONS and os.path.isfile(path)
+
 
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16MB
 app.config["MAX_FORM_MEMORY_SIZE"] = 1024 * 1024  # 1MB
@@ -134,20 +154,19 @@ def add_position():
             return "Запит заблоковано!", 403
 
         name = request.form["name"]
-        file = request.files.get("img")
+        file_name = request.form.get("img")
         ingredients = request.form["ingredients"]
         description = request.form["description"]
         price = request.form["price"]
         weight = request.form["weight"]
 
-        if not file or not file.filename:
-            return "Файл не вибрано або завантаження не вдалося"
-
-        unique_filename = f"{uuid.uuid4()}_{file.filename}"
-        output_path = os.path.join("static/menu", unique_filename)
-
-        with open(output_path, "wb") as f:
-            f.write(file.read())
+        if not is_valid_menu_image(file_name):
+            flash("Оберіть зображення зі списку", "danger")
+            return render_template(
+                "add_position.html",
+                csrf_token=session["csrf_token"],
+                menu_images=list_menu_images(),
+            )
 
         with Session() as cursor:
             new_position = Menu(
@@ -156,14 +175,18 @@ def add_position():
                 description=description,
                 price=price,
                 weight=weight,
-                file_name=unique_filename,
+                file_name=file_name,
             )
             cursor.add(new_position)
             cursor.commit()
 
         flash("Позицію додано успішно!")
 
-    return render_template("add_position.html", csrf_token=session["csrf_token"])
+    return render_template(
+        "add_position.html",
+        csrf_token=session["csrf_token"],
+        menu_images=list_menu_images(),
+    )
 
 
 @app.route("/menu")
