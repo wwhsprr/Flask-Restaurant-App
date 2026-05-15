@@ -9,11 +9,12 @@ from flask_login import (
     login_required,
     current_user,
 )
-from database import Session, Users, Menu, Orders, Reservation
+from database import Session, Users, Menu, Orders, Reservation, Base, engine
 
 import dotenv
 from flask import Flask, render_template, session, flash, redirect, url_for, request
 
+Base.metadata.create_all(engine)
 
 dotenv.load_dotenv()
 
