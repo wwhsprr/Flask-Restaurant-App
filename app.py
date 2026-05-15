@@ -196,10 +196,12 @@ def menu():
     return render_template("menu.html", all_positions=all_positions)
 
 
-@app.route("/position/<name>", methods=["GET", "POST"])
-def position(name):
+@app.route("/position/<int:position_id>", methods=["GET", "POST"])
+def position(position_id):
     with Session() as cursor:
-        us_position = cursor.query(Menu).filter_by(active=True, name=name).first()
+        us_position = cursor.query(Menu).filter_by(
+            active=True, id=position_id
+        ).first()
 
     if not us_position:
         flash("Позицію не знайдено", "danger")
