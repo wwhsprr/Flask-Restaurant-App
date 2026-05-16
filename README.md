@@ -92,7 +92,7 @@ A small full-stack restaurant demo: public menu, shopping basket in session, ord
 | `/cancel_order/<id>`     | POST — mark order cancelled                |
 | `/reserved`              | Table reservation                          |
 | `/add_position`          | Admin — new menu item + image              |
-| `/menu_check`            | Admin — manage menu                        |
+| `/check_menu`            | Admin — manage menu                        |
 | `/reservations_check`    | Admin — list/delete reservations           |
 | `/test_basket`           | Debug — returns session basket as JSON     |
 
