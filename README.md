@@ -2,7 +2,7 @@
 
 A small full-stack restaurant demo: public menu, shopping basket in session, orders tied to logged-in users, table reservations with capacity rules, and an admin area for menu and reservations.
 
-## Features
+## ▸ Features
 
 - **Auth** — registration, login, logout ([Flask-Login](https://github.com/maxcountryman/flask-login)); passwords hashed with **bcrypt**
 - **Menu** — list dishes, dish detail, add items to basket (session)
@@ -11,7 +11,7 @@ A small full-stack restaurant demo: public menu, shopping basket in session, ord
 - **Admin** (user whose nickname is exactly `admin`) — add menu items with image upload, toggle or delete menu rows, list and remove reservations
 - **Security** — CSRF token checks on mutating forms; `Content-Security-Policy` with per-request script nonce; strict session cookie SameSite
 
-## Stack
+## ▸ Stack
 
 | Layer        | Technology                          |
 | ------------ | ----------------------------------- |
@@ -20,12 +20,12 @@ A small full-stack restaurant demo: public menu, shopping basket in session, ord
 | DB driver    | psycopg2-binary                     |
 | Config       | python-dotenv                         |
 
-## Prerequisites
+## ▸ Prerequisites
 
 - Python 3.10+ (tested in a 3.14 venv locally)
 - A running **PostgreSQL** instance and an empty database (or one you are allowed to reset for dev)
 
-## Setup
+## ▸ Setup
 
 1. **Clone the repository** and enter the project directory.
 
@@ -62,14 +62,14 @@ A small full-stack restaurant demo: public menu, shopping basket in session, ord
 
    Open `http://127.0.0.1:5000` in a browser.
 
-## Environment variables
+## ▸ Environment variables
 
 | Variable     | Required | Description                                      |
 | ------------ | -------- | ------------------------------------------------ |
 | `SECRET_KEY` | Yes      | Flask secret key for sessions and CSRF           |
 | `DB_URL`     | Yes      | SQLAlchemy URL (see example above)               |
 
-## Project layout (main pieces)
+## ▸ Project layout (main pieces)
 
 | Path            | Role                                      |
 | --------------- | ----------------------------------------- |
@@ -78,7 +78,7 @@ A small full-stack restaurant demo: public menu, shopping basket in session, ord
 | `templates/`    | Jinja2 HTML                               |
 | `static/`       | CSS and uploaded menu images              |
 
-## Main HTTP routes
+## ▸ Main HTTP routes
 
 | Route                    | Notes                                      |
 | ------------------------ | ------------------------------------------ |
@@ -96,6 +96,6 @@ A small full-stack restaurant demo: public menu, shopping basket in session, ord
 | `/reservations_check`    | Admin — list/delete reservations           |
 | `/test_basket`           | Debug — returns session basket as JSON     |
 
-## License
+## ▸ License
 
 No license file is included; add one if you plan to publish this as open source.
